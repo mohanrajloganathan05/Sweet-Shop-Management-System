@@ -1,56 +1,63 @@
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import axios from "../utils/axiosConfig";
-import "../styles/Register.css";
-
+import "../styles/Auth.css";
 
 export default function Register() {
+  const { register } = useAuth();
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // ✅ for redirect
+  const [msg, setMsg] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/auth/register", { name, email, password });
-      alert("Registration successful! Please login.");
-      navigate("/login"); // ✅ redirect to login
+      await register(name, email, password);
+      setMsg("Registration successful! Redirecting to login...");
+      setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
-      console.error(err);
-      setError(err.response?.data?.message || "Registration failed");
+      setError("Failed to register. Email may already exist.");
     }
   };
 
   return (
-    <div className="form-container">
-      <h2>Register</h2>
-      {error && <p className="error">{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Register</button>
-      </form>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2>Register</h2>
+        {error && <p className="auth-error">{error}</p>}
+        {msg && <p className="auth-success">{msg}</p>}
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Full Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit">Register</button>
+        </form>
+        <p className="auth-msg">
+          Already have an account? <span onClick={() => navigate("/login")}>Login</span>
+        </p>
+      </div>
     </div>
   );
 }

@@ -10,8 +10,8 @@ export default function Header() {
   const isActive = (path) => location.pathname === path;
 
   const handleLogout = () => {
-    logout(); // clear token and user context
-    navigate("/login", { replace: true }); // force redirect to login
+    logout(); // clear token and user context first
+    navigate("/login", { replace: true }); // then redirect
   };
 
   return (
@@ -20,7 +20,7 @@ export default function Header() {
       <div className="nav-links">
         {user && <Link className={isActive("/") ? "active" : ""} to="/">Home</Link>}
 
-        {user && user.role === "admin" && (
+        {user?.role === "admin" && (
           <Link className={isActive("/admin") ? "active" : ""} to="/admin">Admin Panel</Link>
         )}
 

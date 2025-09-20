@@ -1,55 +1,80 @@
-/* Center container */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
 .auth-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-    text-align: center;
-    font-family: Arial, sans-serif;
-  }
-  
-  /* Headings */
-  .auth-container h1 {
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  /* Form */
-  .auth-container form {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+    font-family: 'Poppins', sans-serif;
   }
   
-  /* Inputs */
-  .auth-container input {
-    padding: 12px;
-    margin-bottom: 15px;
+  .auth-card {
+    background-color: #fff;
+    padding: 80px;
+    border-radius: 12px;
+    width: 350px;
+    height: 350px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  .auth-card h2 {
+    margin-bottom: 20px;
+    color: #2575fc;
+  }
+  
+  .auth-card form input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border-radius: 8px;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
+    font-size: 1rem;
+    transition: 0.3s;
   }
   
-  /* Button */
-  .auth-container button {
+  .auth-card form input:focus {
+    border-color: #2575fc;
+    outline: none;
+  }
+  
+  .auth-card button {
+    width: 100%;
     padding: 12px;
-    background-color: #4caf50;
-    color: white;
+    margin-top: 10px;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 8px;
+    background-color: #2575fc;
+    color: white;
+    font-size: 1rem;
     cursor: pointer;
     transition: 0.3s;
   }
   
-  .auth-container button:hover {
-    background-color: #45a049;
+  .auth-card button:hover {
+    background-color: #1a5fcc;
   }
   
-  /* Error Message */
-  .auth-container .error {
-    color: red;
-    margin-bottom: 15px;
+  .auth-msg {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .auth-msg span {
+    color: #2575fc;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .auth-error {
+    color: #f44336;
+    margin-bottom: 10px;
+  }
+  
+  .auth-success {
+    color: #4caf50;
+    margin-bottom: 10px;
   }
   

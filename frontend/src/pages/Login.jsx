@@ -1,50 +1,61 @@
+// src/pages/Login.jsx
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext";
-import axios from "../utils/axiosConfig";
 import { useNavigate } from "react-router-dom";
-import "../styles/Login.css";
-
+import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuth(); // get login function from context
-  const navigate = useNavigate();
+  const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMsg("");
+    setSuccessMsg("");
+
     try {
-      const res = await axios.post("/auth/login", { email, password });
-      // ✅ Update context
-      login(res.data.user); 
-      localStorage.setItem("token", res.data.token); // optional, for API calls
-      navigate("/"); // redirect to home page
-    } catch (err) {
-      console.error(err);
-      alert(err.response?.data?.message || "Login failed");
+      await login(email, password); // login function from context
+      setSuccessMsg("Login successful!");
+      setTimeout(() => navigate("/", { replace: true }), 500); // redirect to home
+    } catch (error) {
+      setErrorMsg(error.response?.data?.message || "Invalid email or password");
     }
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2>Login</h2>
+
+        {errorMsg && <div className="auth-error">{errorMsg}</div>}
+        {successMsg && <div className="auth-success">{successMsg}</div>}
+
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit">Login</button>
+        </form>
+
+        <div className="auth-msg">
+          Don't have an account? <span onClick={() => navigate("/register")}>Register</span>
+        </div>
+      </div>
     </div>
   );
 }

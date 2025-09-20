@@ -1,33 +1,33 @@
-// src/context/AuthContext.jsx
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
+import axios from "axios";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  // Load user from localStorage on mount
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-    if (storedUser) setUser(storedUser);
-  }, []);
+  const register = async (name, email, password) => {
+    const res = await axios.post("http://localhost:5000/api/auth/register", { name, email, password });
+    setUser(res.data.user);
+    localStorage.setItem("token", res.data.token);
+  };
 
-  const login = (userData) => {
-    setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
+  const login = async (email, password) => {
+    const res = await axios.post("http://localhost:5000/api/auth/login", { email, password });
+    setUser(res.data.user);
+    localStorage.setItem("token", res.data.token);
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("user");
+    localStorage.removeItem("token");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, register, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Custom hook to use auth
 export const useAuth = () => useContext(AuthContext);
