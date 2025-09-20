@@ -80,18 +80,20 @@ const updateSweet = async (req, res) => {
 // 5️ Delete sweet (Admin)
 
 const deleteSweet = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const sweet = await Sweet.findById(id);
-    if (!sweet) return res.status(404).json({ message: "Sweet not found" });
-
-    await sweet.remove();
-    res.json({ message: "Sweet deleted successfully" });
-  } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
-};
+    try {
+      const { id } = req.params;
+  
+      const sweet = await Sweet.findById(id);
+      if (!sweet) return res.status(404).json({ message: "Sweet not found" });
+  
+      await Sweet.findByIdAndDelete(id); // safer
+      res.json({ message: "Sweet deleted successfully" });
+    } catch (error) {
+      console.error("Delete sweet error:", error);
+      res.status(500).json({ message: "Server error", error: error.message });
+    }
+  };
+  
 
 // 6️ Purchase sweet (User)
 
