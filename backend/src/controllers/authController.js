@@ -15,11 +15,14 @@ const registerUser = async (req, res) => {
   if (userExists) return res.status(400).json({ message: "User already exists" });
 
   const user = await User.create({ name, email, password });
+
   res.status(201).json({
-    _id: user._id,
-    name: user.name,
-    email: user.email,
-    isAdmin: user.isAdmin,
+    user: {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    },
     token: generateToken(user._id),
   });
 };
@@ -31,12 +34,15 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
+
   if (user && (await user.matchPassword(password))) {
-    res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      isAdmin: user.isAdmin,
+    res.status(200).json({
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      },
       token: generateToken(user._id),
     });
   } else {

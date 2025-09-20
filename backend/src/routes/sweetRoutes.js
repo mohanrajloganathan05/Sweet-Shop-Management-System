@@ -9,8 +9,8 @@ const {
   restockSweet,
 } = require("../controllers/sweetController");
 
-const { protect } = require("../middleware/authMiddleware"); // JWT auth
-const { admin } = require("../middleware/adminMiddleware"); // Admin check
+const { protect } = require("../middlewares/authMiddleware"); // JWT auth
+const { admin } = require("../middlewares/adminMiddleware"); // Admin check
 
 const router = express.Router();
 

@@ -2,6 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
 const sweetRoutes = require("./routes/sweetRoutes");
+const dotenv = require("dotenv"); 
+
+dotenv.config({ path: process.env.NODE_ENV === 'test' ? '.env.test' : '.env' });
 
 
 const app = express();
