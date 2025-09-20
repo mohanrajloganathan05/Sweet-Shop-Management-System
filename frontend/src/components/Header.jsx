@@ -1,14 +1,18 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "./Header.css";
 
 export default function Header() {
   const { user, logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (path) => location.pathname === path;
-  console.log("User in header:", user);
 
+  const handleLogout = () => {
+    logout(); // clear token and user context
+    navigate("/login", { replace: true }); // force redirect to login
+  };
 
   return (
     <nav className="navbar">
@@ -21,7 +25,7 @@ export default function Header() {
         )}
 
         {user ? (
-          <button className="logout-btn" onClick={logout}>Logout</button>
+          <button className="logout-btn" onClick={handleLogout}>Logout</button>
         ) : (
           <>
             <Link className={isActive("/login") ? "active" : ""} to="/login">Login</Link>
