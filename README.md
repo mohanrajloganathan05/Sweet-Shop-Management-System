@@ -22,9 +22,9 @@ This project demonstrates:
 ---
 
 ## ⚙️ Project Setup
-
-### 1️⃣ Clone Repository
 ```bash
+1️⃣ Clone Repository
+
 git clone https://github.com/mohanrajloganathan05/Sweet-Shop-Management-System.git
 cd Sweet-Shop-Management-System
 
@@ -53,13 +53,14 @@ npm run dev
 
 
 Frontend runs at: http://localhost:5173
+```
 
 ## 📌 Notes
-- Make sure **MongoDB**is running locally before starting the backend. You can manage your local database easily using **MongoDB Compass**.
+- Make sure **MongoDB** is running locally before starting the backend. You can manage your local database easily using **MongoDB Compass**.
 - Update the `.env` file with your own JWT secret for security.
 - Frontend and backend run on separate ports (`5173` and `5000`) during development.
 
-
+```
 📂 Folder Structure
 Sweet-Shop-Management-System/
 ├── backend/
@@ -74,8 +75,8 @@ Sweet-Shop-Management-System/
 │   ├── public/
 │   └── package.json
 └── README.md
-
-📝 Features
+```
+## 📝 Features
 
 User Authentication: Register/Login with JWT security.
 
@@ -87,12 +88,22 @@ Inventory Tracking: Add, update, and remove sweets.
 
 RESTful APIs: Backend endpoints for all operations.
 
+## Role-Based Access Control
+
+Only users with the role of Admin can access the Admin Panel.
+
+Normal users will not see the Admin Panel link in the navigation and cannot access the admin routes directly.
+
+Admin features include adding, updating, deleting, and restocking sweets.
+
+This ensures that sensitive actions are restricted to authorized users only, enhancing security and proper workflow.
+
 ## 🤖 My AI Usage
 
 During the development of the Incubyte Sweet Shop Management System, I leveraged **AI tools** to enhance my workflow and speed up development:
 
 - **AI Tools Used:**
-  - **ChatGPT **
+  - **ChatGPT**
 
 - **How I Used AI:**
   - I used ChatGPT to **brainstorm the overall project structure** including backend routes, frontend pages, and context setup.
